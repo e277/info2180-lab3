@@ -5,113 +5,37 @@ window.onload = function(){
         gameBoard.children[i].classList.add("square")
     }
 
+    const X_CLASS = "X"
+    const O_CLASS = "O"
+    WINNING_COMBINATIONS = [
+        [0,1,2], [3,4,5], [6,7,8], // horizontal
+        [0,3,6], [1,4,7], [2,5,8], // vertical
+        [0,4,8], [2,4,6] // diagonal
+    ]
+    let xTurn = true
+
+    // For your next task, when a user clicks on a square in the grid it should alternate putting 
+    // an X or an O onto the square that was clicked. Also ensure you add the class "X" or 
+    // "O" to the square so that it is styled with the appropriate colour from the stylesheet. 
+    // Take a look at the stylesheet to see what these classes do. 
     
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const X_CLASS = 'x'
-const CIRCLE_CLASS = 'circle'
-const WINNING_COMBINATIONS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-]
-const cellElements = document.querySelectorAll('[data-cell]')
-// const winningMessageElement = document.getElementById('winningMessage')
-const btn = document.getElementById('btn')
-// const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
-let circleTurn
-
-startGame()
-
-btn.addEventListener('click', startGame)
-
-function startGame() {
-  circleTurn = false
-  cellElements.forEach(cell => {
-    cell.classList.remove(X_CLASS)
-    cell.classList.remove(CIRCLE_CLASS)
-    cell.removeEventListener('click', handleClick)
-    cell.addEventListener('click', handleClick, { once: true })
-  })
-  setBoardHoverClass()
-  winningMessageElement.classList.remove('show')
-}
-
-function handleClick(e) {
-  const cell = e.target
-  const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
-  placeMark(cell, currentClass)
-  if (checkWin(currentClass)) {
-    endGame(false)
-  } else if (isDraw()) {
-    endGame(true)
-  } else {
-    swapTurns()
-    setBoardHoverClass()
-  }
-}
-
-function endGame(draw) {
-  if (draw) {
-    winningMessageTextElement.innerText = 'Draw!'
-  } else {
-    winningMessageTextElement.innerText = `${circleTurn ? "O's" : "X's"} Wins!`
-  }
-  winningMessageElement.classList.add('show')
-}
-
-function isDraw() {
-  return [...cellElements].every(cell => {
-    return cell.classList.contains(X_CLASS) || cell.classList.contains(CIRCLE_CLASS)
-  })
-}
-
-function placeMark(cell, currentClass) {
-  cell.classList.add(currentClass)
-}
-
-function swapTurns() {
-  circleTurn = !circleTurn
-}
-
-function setBoardHoverClass() {
-  board.classList.remove(X_CLASS)
-  board.classList.remove(CIRCLE_CLASS)
-  if (circleTurn) {
-    board.classList.add(CIRCLE_CLASS)
-  } else {
-    board.classList.add(X_CLASS)
-  }
-}
-
-function checkWin(currentClass) {
-  return WINNING_COMBINATIONS.some(combination => {
-    return combination.every(index => {
-      return cellElements[index].classList.contains(currentClass)
+    // Hint: You may want to initialize an empty array to keep track of the state of the game 
+    // after each square is clicked so that you can use it later to check which user has won. 
+    // You can also use the JavaScript innerHTML or textContent property to make the 
+    // appropriate X or O show up in the appropriate div
+    gameBoard.addEventListener("click", function(event){
+        square = event.target
+        if (xTurn){
+            square.innerHTML = X_CLASS
+            square.classList.add(X_CLASS)
+            xTurn = false
+        } else {
+            square.innerHTML = O_CLASS
+            square.classList.add(O_CLASS)
+            xTurn = true
+        }
     })
-  })
+
 }
+
+
