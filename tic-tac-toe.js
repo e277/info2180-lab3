@@ -16,6 +16,10 @@ window.onload = function() {
 
     gameBoard.addEventListener("click", (event) => {
         const square = event.target
+        if (!square.classList.contains("square") || square.classList.contains(X_CLASS) || square.classList.contains(O_CLASS) || winner) {
+            return
+        }
+
         if (xTurn){
             square.innerHTML = X_CLASS
             square.classList.add(X_CLASS)
