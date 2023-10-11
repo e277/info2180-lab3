@@ -14,15 +14,6 @@ window.onload = function(){
     ]
     let xTurn = true
 
-    // For your next task, when a user clicks on a square in the grid it should alternate putting 
-    // an X or an O onto the square that was clicked. Also ensure you add the class "X" or 
-    // "O" to the square so that it is styled with the appropriate colour from the stylesheet. 
-    // Take a look at the stylesheet to see what these classes do. 
-    
-    // Hint: You may want to initialize an empty array to keep track of the state of the game 
-    // after each square is clicked so that you can use it later to check which user has won. 
-    // You can also use the JavaScript innerHTML or textContent property to make the 
-    // appropriate X or O show up in the appropriate div
     gameBoard.addEventListener("click", function(event){
         square = event.target
         if (xTurn){
@@ -34,6 +25,17 @@ window.onload = function(){
             square.classList.add(O_CLASS)
             xTurn = true
         }
+    })
+
+    
+    const squares = document.querySelectorAll(".square")
+    squares.forEach(square => {
+        square.addEventListener("mouseover", function(event) {
+            square.classList.add("hover")
+        })
+        square.addEventListener("mouseout", function(event) {
+            square.classList.remove("hover")
+        })
     })
 
 }
